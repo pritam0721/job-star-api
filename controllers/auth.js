@@ -3,7 +3,6 @@ const { StatusCodes } = require("http-status-codes");
 const { BadRequestError, UnauthenticatedError } = require("../errors");
 
 const register = async (req, res) => {
-  User.init();
   const user = await User.create({ ...req.body });
   const token = user.createJWT();
   res.status(StatusCodes.CREATED).json({
@@ -45,6 +44,7 @@ const login = async (req, res) => {
 };
 
 const updateUser = async (req, res) => {
+
   const { email, name, lastName, location } = req.body;
   if (!email || !name || !lastName || !location) {
     throw new BadRequestError("please provides all values");
